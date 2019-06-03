@@ -1,0 +1,192 @@
+<html>
+<head>
+    <title> calorie requirement</title>
+      
+  <style type="text/css">
+    h1 {
+      text-align: center;
+      color: crimson;
+    }
+    th{
+      font-size: 28px;
+    }
+    td{
+      font-size: 20px;
+      text-align: center;
+    }
+
+    label {
+  display: block;
+  box-shadow: 0.1em 0.1em 0.2em #888;
+  margin: 1em;
+  border-radius: 1ex;
+  padding: 1ex 1em;
+}
+input[type=number] {
+  text-align: right;
+  border: none;
+}
+input {
+  float: right;
+}
+span {
+  font-weight: bold;
+}
+ tfoot{
+  text-align: center;
+ }
+  </style>
+ <script type="text/javascript">
+   function calsPerDay() {
+  function find(id) { return document.getElementById(id) }
+
+  var age = find("age").value
+  var height = find("height").value * 2.54
+  var weight = find("weight").value / 2.2
+  var result = 0
+  if (find("male").checked) 
+    result = 66.47 + (30.25 * weight) + (1.9685 * height - (6.75 * age))
+  else if (find("female").checked)
+    result = 665.09 + (21.03 * weight) + (0.7244 * height - (4.67 * age))
+  find("totalCals").innerHTML = Math.round( result )
+}
+calsPerDay()
+ </script>
+</head>
+<body background="s2.jpg">      
+    <script> 
+        function Add() {
+            var txtFoodName = document.getElementById("txtFoodName");
+            var Calorie = document.getElementById("Calorie");
+            var Carbs = document.getElementById("Carbs");
+            var Fat = document.getElementById("Fat");
+            var Proteins = document.getElementById("Proteins");
+            var Sugar = document.getElementById("Sugar");
+            var Sodium = document.getElementById("Sodium");
+            var Sumcal = document.getElementById("Calorie");
+            AddRow(txtFoodName.value, Calorie.value, Carbs.value, Fat.value, Proteins.value, Sugar.value, Sodium.value, Sumcal.value);
+            txtFoodName.value = "";
+            Calorie.value = "";
+            Carbs.value = "";
+            Fat.value = "";
+            Proteins.value = "";
+            Sugar.value = "";
+            Sodium.value = "";
+            Sumcal.value = "";
+        };
+ 
+        function Remove(button) {
+            
+            var row = button.parentNode.parentNode;
+            var name = row.getElementsByTagName("TD")[0].innerHTML;
+            if (confirm("Do you want to delete: " + name)) {
+ 
+                
+                var table = document.getElementById("tblFood");
+ 
+                
+                table.deleteRow(row.rowIndex);
+            }
+        };
+ 
+        function AddRow(name, calorie, carbs, fat, proteins, sugar, sodium, sumcal) {
+            
+            var tBody = document.getElementById("tblFood").getElementsByTagName("TBODY")[0];
+
+            row = tBody.insertRow(-1);
+ 
+            
+            var cell = row.insertCell(-1);
+            cell.innerHTML = name;
+ 
+            
+            cell = row.insertCell(-1);
+            cell.innerHTML = calorie;
+             cell = row.insertCell(-1);
+            cell.innerHTML = carbs;
+
+             cell = row.insertCell(-1);
+            cell.innerHTML = fat;
+
+             cell = row.insertCell(-1);
+            cell.innerHTML = proteins;
+
+             cell = row.insertCell(-1);
+            cell.innerHTML = sugar;
+
+             cell = row.insertCell(-1);
+            cell.innerHTML = sodium;
+
+            cell = row.insertCell(-1);
+            cell.innerHTML = sumcal;
+            
+            cell = row.insertCell(-1);
+            var btnRemove = document.createElement("INPUT");
+            btnRemove.type = "button";
+            btnRemove.value = "Remove";
+            btnRemove.setAttribute("onclick", "Remove(this);");
+            cell.appendChild(btnRemove);
+        };
+    </script>
+    <h1><strong><i>CHECK THE DAILY REQUIREMENTS</i></strong></h1>
+<label><strong>FEMALE:</strong>:
+  <input id="female" type="radio" name="gender" onchange="calsPerDay()">
+</label>
+<label><strong>MALE:</strong>
+  <input id="male" type="radio" name="gender" onchange="calsPerDay()" checked>
+</label>
+<label><strong>AGE:</strong>
+  <input id="age" type="number" oninput="calsPerDay()" value="25">
+  years
+</label>
+<label><strong>HEIGHT:</strong>
+  <input id="height" type="number" oninput="calsPerDay()" value="160">
+  in cm
+</label>
+<label><strong>WEIGHT:</strong>
+  <input id="weight" type="number" oninput="calsPerDay()" value="75">
+  in kg
+</label>
+<label>
+  <strong>BASE METABOLLIC RATE:</strong> <span id="totalCals"></span> cal per day
+</label>
+    <table id="tblFood" cellpadding="0" cellspacing="0" border="1">
+      <calgroup>
+        <col style="background-color:cornsilk;">
+        <col style="background-color:chocolate;">
+        <col style="background-color:cornsilk;">
+        <col style="background-color:chocolate;">
+        <col style="background-color:cornsilk;">
+        <col style="background-color:chocolate;">
+        <col style="background-color:cornsilk;">
+       </calgroup> 
+        <thead>
+            <tr>
+                <th>Food Name</th>
+                <th>Calorie</th>
+                <th>Carbs</th>
+                <th>Fat</th>
+                <th>Proteins</th>
+                <th>Sugar</th>
+                <th>Sodium</th>
+                <th>Sum of calorie</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtFoodName" /></td>
+                <td><input type="number" id="Calorie" /></td>
+                <td><input type="number" id="Carbs" /></td>
+                <td><input type="number" id="Fat" /></td>
+                <td><input type="number" id="Proteins" /></td>
+                <td><input type="number" id="Sugar" /></td>
+                <td><input type="number" id="Sodium" /></td>
+                <td><input type="button" onclick="Add()" value="Add" /></td>                
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
